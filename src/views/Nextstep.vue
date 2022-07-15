@@ -1,113 +1,103 @@
 <template>
   <div class="home">
-        <h1 class="text1">Ahoy You!</h1>
-        <h1 class="text2">Care to register? </h1>
+        <h1 class="text1">Great!</h1>
+        <h1 class="text2">Now your name</h1>
 
  
  <div class="FormHolder">
 <form  @submit.prevent="submit()">
   
-    <label for="email">Email:</label>
+  <label for="name">First Name:</label>
 
-    <input
-        id="email"
-        type="text"
-        minlength="3"
-        maxlength="21"
-        pattern="^\S+@\S+\.\S+$"
-        required
-        placeholder="Something ending with monterail.com"
-        v-model="email"
-      />
+   <input
+      id="name"
+      type="text"
+      minlength="3"
+      maxlength="21"
+      pattern="^[a-zA-Z]{3,21}$"
+      required
+      placeholder="e.g. Jessica"
+      v-model="name"
+    />
 
-    <label for="password">Password:</label>
-      <span style="position: relative;">
-        <img @click="showPassword()" class="eye" alt="eye" src="../assets/eye.svg">
-      <input
-      class="passwordInput"
-        id="password"
-        :type="type"
-        placeholder="Enter your password"
-        required
-        v-model="password"
-      />
-      </span>
-      <div class="pwRestrict">
-        <p :class="passwordCheck1">At least 8 characters</p>
-        <p :class="passwordCheck2">At least one letter</p>
-          <p  :class="passwordCheck3">At least one digit</p>
-        </div>
+      <label for="name">Last Name:</label>
 
-    <div class="submit">
+   <input
+      id="lastname"
+      type="text"
+      minlength="3"
+      maxlength="21"
+      pattern="^[a-zA-Z]{3,21}$"
+      required
+      placeholder="e.g. Walton"
+      v-model="lastname"
+    />
 
-      <button name="createAcc" type="submit" >Next step</button>
-        <div class="log"> Log in instead</div> 
+   
+  <label for="date">Date of Birth:</label>
+    <input placeholder="DD / MM / YYYY" v-model="data" required class="textbox-n" max="2022-07-14" type="text" onfocus="(this.type='date')" id="date">
+
+    <div class="pwRestrict">
+      <p :class="dataCheck">You should be minimum 18 years old</p>
+
       </div>
+ <div class="terms">
+      <input type="checkbox" id="checkbo" v-model="terms" required />
+      <p>I accept <u>Privacy Policy</u></p>
+    </div>
+
+   <div class="submit">
+      <button name="createAcc" type="submit">Register</button>
+       <div class="log"> Log in instead</div> 
+    </div>
+
+
   </form>
-  
+
  </div>
 
   </div>
+
 </template>
 
 <script>
-
+// @ is an alias to /src
 
 export default {
+  props:["email"],
   name: 'Home',
-  components: {
-    
-  },
   data() {
     return {
-      email:"",
-      password:"",
-      type:"password",
-      errorChar:true,
-      errorLetter:true,
-      errorDig:true
+      name:"",
+      data:""
     }
   },
   computed:{
-  passwordCheck1: function () {
-      if (this.password.length == 0) return;
-      if (this.password.length >= 8){
-        
+      dataCheck: function () {
+       
+         let x=new Date(this.data);
+        let y = new Date()
+       
+         let limit = new Date("1922-01-01")
+        if(limit>x)return "error";
+      if (this.data == 0) return;
+      if (x-y<= -567648000000){
+       
         return "sucess";
         }else
       return "error";
-    },
-     passwordCheck2: function () {
-      if (this.password.length == 0) return;
-      let regExp = /[a-zA-Z]/g;
-      if (regExp.test(this.password))
-        return "sucess";
-      return "error";
-    },
-     passwordCheck3: function () {
-      if (this.password.length == 0) return;
-      let regExp = /[0-9]/g;
-      if (regExp.test(this.password)) return "sucess";
-      return "error";
     }
+
   },
+
   methods: {
       submit(){
-        console.log(this.passwordCheck1)
-     if(this.passwordCheck1=="sucess" && this.passwordCheck2=="sucess"  &&this.passwordCheck3=="sucess")
-      this.$router.push({  name:"Nextstep", params:{ email: this.email }});
+      this.$router.push({  name:"Laststep", params:{ email: this.email , name:this.name }});
       console.log(this.email)
-    },
-     showPassword() {
-       if(this.type === 'password') {
-          this.type = 'text'
-        
-       } else {
-          this.type = 'password'
-         
-       }
-     }
+    }
   },
+
+  
   
 }
 </script>
@@ -130,6 +120,34 @@ font-size: 14px;
 line-height: 170%;
 color:  #27AE60;;
 letter-spacing: 0.04em;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {   color: transparent;   background: none;   z-index: 1; }
+input[type="date"]::before {
+    color: #999999;
+    content: attr(placeholder);
+}
+input[type="date"] {
+    color: #ffffff;
+}
+input[type="date"]:focus,
+input[type="date"]:valid {
+    color: #666666;
+}
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+    content: "" !important;
+}
+
+
+.terms{
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 21px;
+color: #292A33;
 }
 .log{
   font-family: 'Roboto Mono';
@@ -168,15 +186,15 @@ letter-spacing: -0.01em;
 margin-top: 120px;
 color: #343541;
   }
-
 .text2{
-font-family: 'Eczar';
+  font-family: 'Eczar';
 font-style: normal;
 font-weight: 600;
 font-size: 40px;
 line-height: 102%;
 text-align: center;
 letter-spacing: -0.01em;
+
 color:  #85868d
 }
 
@@ -189,7 +207,6 @@ form{
 width: 100%;
 padding: 24px;
 }
-
 label {
   display: block;
 width: 100%;
@@ -201,8 +218,8 @@ font-size: 14px;
 line-height: 18px;
 text-transform: uppercase;
 color: #F47073;
-}
 
+}
 input {
 display: flex;
 flex-direction: row;
@@ -220,7 +237,10 @@ font-weight: 400;
 font-size: 18px;
 line-height: 21px;
 border: none;
-text-overflow: ellipsis;
+}
+#checkbo{
+  width: 4%;
+ margin-right: 10px;
 
 }
 
@@ -243,24 +263,24 @@ letter-spacing: 0.04em;
 }
 
 button {
-display: flex;
+  display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
-background:#EC1115;
-border: 0;
-padding: 20px;
+  background:#EC1115;
+  border: 0;
+  padding: 20px;
 width: 100%;
-color: white;
-border-radius: 64px;
-font-family: 'Roboto Mono';
+  color: white;
+  border-radius: 64px;
+
+  font-family: 'Roboto Mono';
 font-style: normal;
 font-weight: 500;
 font-size: 18px;
 line-height: 100%;
 letter-spacing: 0.015em;
 }
-
 .submit{
 margin-top: 30px;
 }
@@ -322,6 +342,7 @@ button{
 width: 100%;
 text-align: center;
 margin-top: 0px;
+
 }
 
 }

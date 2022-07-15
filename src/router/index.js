@@ -1,11 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-
+import Nextstep from '../views/Nextstep.vue'
+import Laststep from '../views/Laststep.vue'
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    props: true
+  },
+  {
+    path: "/Nextstep",
+    name: "Nextstep",
+    component: Nextstep,
+    props: true
+  },
+
+  {
+    path: "/Laststep",
+    name: "Laststep",
+    component: Laststep,
+    props: true
   },
   {
     path: '/about',
