@@ -92,6 +92,7 @@ export default {
 
   methods: {
       submit(){
+        if(this.dataCheck=="sucess")
       this.$router.push({  name:"Laststep", params:{ email: this.email , name:this.name }});
       console.log(this.email)
     }

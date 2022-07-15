@@ -56,6 +56,7 @@ text-align: center;
 letter-spacing: -0.01em;
 margin-top: 120px;
 color: #343541;
+
   }
 
 .text2{

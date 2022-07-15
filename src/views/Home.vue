@@ -93,7 +93,6 @@ export default {
   },
   methods: {
       submit(){
-        console.log(this.passwordCheck1)
      if(this.passwordCheck1=="sucess" && this.passwordCheck2=="sucess"  &&this.passwordCheck3=="sucess")
       this.$router.push({  name:"Nextstep", params:{ email: this.email }});
       console.log(this.email)
